@@ -2,6 +2,7 @@
 	$person = [ 'first_name' => 'nikunj', 'last_name' => 'bhatt' ];
 	session(['status' => 'success']);
 	$emptyArray = [];
+	$days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -116,6 +117,9 @@
 		@endswitch
 
 		@for($a = 1; $a < 6; $a++)
+			@if($a % 2 == 0)
+				@continue
+			@endif
 			<p>a = {{ $a }}</p>
 		@endfor
 
@@ -125,6 +129,9 @@
 
 		@while($a < 11)
 			<p>a = {{ $a++ }}</p>
+			@if($a > 8)
+				@break
+			@endif
 		@endwhile
 
 		@forelse($emptyArray as $value)
@@ -132,5 +139,48 @@
 		@empty
 			<p>array is empty</p>
 		@endforelse
+
+<style>
+.bold { font-weight: bold; }
+</style>
+		@foreach ($days as $day)
+			@if($loop->first)
+				<p>starting the loop</p>
+			@endif
+			@if($loop->last)
+				<p>printing the last day:</p>
+			@endif
+
+			<p @class(['bold' => $loop->odd]) @style(['color:red' => $loop->even])>index: {{ $loop->index }}, iteration: {{ $loop->iteration }}, day: {{ $day }}</p>
+		@endforeach
+
+@php
+	$gender = rand(0, 2);
+@endphp
+		<p>
+			<input type="radio" @checked($gender == 1)> Male , 
+			<input type="radio" @checked($gender == 2)> Female
+		</p>
+
+		<p>
+			<select>
+				<option @selected($gender == 0) @disabled($gender != 0)></option>
+				<option @selected($gender == 1) @disabled($gender != 1)>Male</option>
+				<option @selected($gender == 2) @disabled($gender != 2)>Female</option>
+			</select>
+		</p>
+
+		<p><input @readonly($gender == 0)></p>
+		<p>
+			<form>
+				<input name="name" @required($gender != 0)>
+				<button>Submit</button>
+			</form>
+		</p>
+
+		@include('includes.sub-view', ['status' => 'success'])
+		@includeIf('includes.non-exist-view')
+		@includeWhen($gender != 0, 'includes.gender')
+		@each('includes.day', $days, 'day')
     </body>
 </html>
