@@ -1,0 +1,1 @@
+<p style="color:{{ $color }}">This is Alert component. {{ $someText }}. first name: {{ $person['first_name'] }} , last name: {{ $person['last_name'] }}</p>

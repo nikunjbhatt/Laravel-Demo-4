@@ -1,0 +1,1 @@
+<p :attrib="{{ $attributes[':attrib'] }}">a component in sub-folder. first name: {{ $person['first_name'] }} , last name: {{ $person['last_name'] }}.</p>

@@ -182,5 +182,9 @@
 		@includeIf('includes.non-exist-view')
 		@includeWhen($gender != 0, 'includes.gender')
 		@each('includes.day', $days, 'day')
+		{{-- this is a blade comment --}}
+		<!-- this is html comment -->
+		<x-alert some-text="this is some text" color="green" :$person />
+		<x-sub-folder.compo :person="$person" ::attrib="some data" />
     </body>
 </html>
