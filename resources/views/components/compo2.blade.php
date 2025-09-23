@@ -1,0 +1,1 @@
+<p>This is compo2. this is from slot: {{ $slot1 }}. {{ $slot1->attributes['class'] }}</p>

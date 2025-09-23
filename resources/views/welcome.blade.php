@@ -183,8 +183,11 @@
 		@includeWhen($gender != 0, 'includes.gender')
 		@each('includes.day', $days, 'day')
 		{{-- this is a blade comment --}}
-		<!-- this is html comment -->
+		<!-- this is an html comment -->
 		<x-alert some-text="this is some text" color="green" :$person />
 		<x-sub-folder.compo :person="$person" ::attrib="some data" />
+		<x-compo2>
+			<x-slot:slot1 class="some-class">this is slot1</x-slot>
+		</x-compo2>
     </body>
 </html>
