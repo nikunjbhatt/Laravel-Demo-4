@@ -189,5 +189,27 @@
 		<x-compo2>
 			<x-slot:slot1 class="some-class">this is slot1</x-slot>
 		</x-compo2>
+
+		@push('p1')
+			<p>this is p1 stack 1</p>
+		@endpush
+
+		@push('p1')
+			<p>this is p1 stack 2</p>
+		@endpush
+
+		@prepend('p1')
+			<p>this is p1 stack 0</p>
+		@endprepend
+
+		@stack('p1')
+
+		@fragment('fragment1')
+			<p>This is fragment1</p>
+		@endfragment
+
+		@fragment('fragment2')
+			<p>This is fragment2</p>
+		@endfragment
     </body>
 </html>
