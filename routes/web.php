@@ -43,3 +43,31 @@ Route::any('/page2', function () {
 Route::match(['get', 'post'], '/page1', function() {
 	return view('page1');
 });
+
+Route::get('/page6/{user_id}', function($id) {
+	return 'supplied parameter user_id: ' . $id;
+});
+Route::get('/page7/{user_id}/payments/{paymentId}', function($userId, $paymentId) {
+	return "supplied parameters user_id: $userId , payment id: $paymentId";
+});
+Route::get('/page8/{userId?}', function($userId = -1) {
+	return "user id: $userId";
+});
+Route::get('/page9/{userId}/{firstName?}', function($userId, $firstName = 'Nikunj') {
+	return "user id: $userId, first name: $firstName";
+})->where(['userId' => '[0-9]+', 'firstName' => '[A-Za-z]+']);
+Route::get('/page10/{userId}/{firstName?}', function($userId, $firstName = 'Nikunj') {
+	return "user id: $userId, first name: $firstName";
+})->whereNumber('userId')->whereAlpha('firstName');
+Route::get('/page11/{userId}', function($userId) {
+	return "user id: $userId";
+})->whereIn('userId', [1, 99, 888, 'abc', 'xyz']);
+
+Route::view('/page12', 'page12');
+Route::get('/page13', function() {
+	return view('page13');
+})->name('page13');
+
+Route::get('/page14/{param?}', function($param = '') {
+	return view('page14');
+})->name('page14');
