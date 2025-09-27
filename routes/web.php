@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
 
@@ -7,11 +8,11 @@ Route::get('/', function () {
     return view('welcome', ['name' => 'nikunj', 'surname' => 'bhatt', 'dob' => null]);
 });
 
-Route::view('/page1', 'page1');
+Route::view('/page1', 'page1')->name('page1');
 
 Route::get('/page2', function () {
 	return view('page2');
-});
+})->name('page2');
 
 Route::get('/form', function () {
 	return view('form');
@@ -71,3 +72,21 @@ Route::get('/page13', function() {
 Route::get('/page14/{param?}', function($param = '') {
 	return view('page14');
 })->name('page14');
+
+Route::prefix('pages')->name('pages.')->middleware(['web', 'api'])->group(function() {
+	Route::get('/page15', function() {
+		return view('page15');
+	})->name('page15');
+	Route::get('/page16', function() {
+		return view('page16');
+	})->name('page16');
+}); 
+
+Route::prefix('user')->name('user.')->group(function() {
+	Route::get('id/{user}', function(User $user) {
+		return $user->name . ' , ' . $user->email;
+	})->whereNumber('user'); //->withTrashed();
+	Route::get('name/{user:name}', function(User $user) {
+		return $user->id . ' , ' . $user->email;
+	})->whereAlpha('user'); //->withTrashed();
+});
