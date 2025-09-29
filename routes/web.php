@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
     return view('welcome', ['name' => 'nikunj', 'surname' => 'bhatt', 'dob' => null]);
@@ -80,13 +82,28 @@ Route::prefix('pages')->name('pages.')->middleware(['web', 'api'])->group(functi
 	Route::get('/page16', function() {
 		return view('page16');
 	})->name('page16');
-}); 
+});
+
+Route::view('/user-not-found', 'user.not-found')->name('user-not-found');
 
 Route::prefix('user')->name('user.')->group(function() {
 	Route::get('id/{user}', function(User $user) {
 		return $user->name . ' , ' . $user->email;
 	})->whereNumber('user'); //->withTrashed();
+
 	Route::get('name/{user:name}', function(User $user) {
 		return $user->id . ' , ' . $user->email;
-	})->whereAlpha('user'); //->withTrashed();
+	})
+		->whereAlpha('user')
+		//->withTrashed();
+		->missing(function() {
+	        return Redirect::route('user-not-found');
+    	});
 });
+
+Route::fallback(function() {
+	return view('not-found');
+});
+
+Route::get('u/{id}', [UserController::class, 'show']);
+//Route::get('u/{id}', 'App\Http\Controllers\UserController@show');
