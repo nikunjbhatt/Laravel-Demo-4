@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\AtoZController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\User2Controller;
+
 use App\Models\User;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Redirect;
@@ -107,3 +111,6 @@ Route::fallback(function() {
 
 Route::get('u/{id}', [UserController::class, 'show']);
 //Route::get('u/{id}', 'App\Http\Controllers\UserController@show');
+
+Route::get('/atoz', AtoZController::class);
+Route::resource('user2', User2Controller::class);
