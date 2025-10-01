@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class User2Controller extends Controller
+class C2Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ class User2Controller extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        //
     }
 
     /**
@@ -28,16 +27,13 @@ class User2Controller extends Controller
      */
     public function store(Request $request)
     {
-        return <<<USER_STORE
-		<p>Hello {$request->name},</p>
-		<p>Your email address is {$request->email}.</p>
-		USER_STORE;
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $id)
     {
         //
     }
@@ -45,7 +41,7 @@ class User2Controller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(string $id)
     {
         //
     }
@@ -53,15 +49,7 @@ class User2Controller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
+    public function update(Request $request, string $id)
     {
         //
     }

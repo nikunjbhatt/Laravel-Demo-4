@@ -3,6 +3,9 @@
 use App\Http\Controllers\AtoZController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\User2Controller;
+use App\Http\Controllers\User3Controller;
+
+use App\Http\Middleware\MidWare1;
 
 use App\Models\User;
 
@@ -114,3 +117,10 @@ Route::get('u/{id}', [UserController::class, 'show']);
 
 Route::get('/atoz', AtoZController::class);
 Route::resource('user2', User2Controller::class);
+Route::resource('user2', User2Controller::class)->only('store')->middleware(MidWare1::class);
+
+Route::middleware(MidWare1::class)->group(function() {
+	Route::get('user3', [User3Controller::class, 'show']);
+	Route::get('user3/create', [User3Controller::class, 'create'])->name('user3.create')->withoutMiddleware(MidWare1::class);
+	Route::post('user3', [User3Controller::class, 'store'])->name('user3.store');
+});

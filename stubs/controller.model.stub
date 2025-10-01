@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace {{ namespace }};
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
 
-class User2Controller extends Controller
+class {{ class }} extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,24 +21,21 @@ class User2Controller extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store({{ storeRequest }} $request)
     {
-        return <<<USER_STORE
-		<p>Hello {$request->name},</p>
-		<p>Your email address is {$request->email}.</p>
-		USER_STORE;
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show({{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -45,7 +43,7 @@ class User2Controller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit({{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -53,7 +51,7 @@ class User2Controller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
     {
         //
     }
@@ -61,7 +59,7 @@ class User2Controller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy({{ model }} ${{ modelVariable }})
     {
         //
     }
