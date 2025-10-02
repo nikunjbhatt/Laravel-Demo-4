@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AtoZController;
+use App\Http\Controllers\QwertyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\User2Controller;
 use App\Http\Controllers\User3Controller;
@@ -9,6 +10,7 @@ use App\Http\Middleware\MidWare1;
 
 use App\Models\User;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Redirect;
@@ -124,3 +126,14 @@ Route::middleware(MidWare1::class)->group(function() {
 	Route::get('user3/create', [User3Controller::class, 'create'])->name('user3.create')->withoutMiddleware(MidWare1::class);
 	Route::post('user3', [User3Controller::class, 'store'])->name('user3.store');
 });
+
+Route::get('/path/{param}', function(Request $request) {
+	if($request->is('path/a*')) {
+		return 'pattern matched: path/a*';
+	}
+	
+	return $request->path();
+});
+
+Route::get('/page17', [QwertyController::class, 'xyz'])->name('page17-xyz');
+Route::any('/page18', [QwertyController::class, 'abc'])->name('page18-abc');
