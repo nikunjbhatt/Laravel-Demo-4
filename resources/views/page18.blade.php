@@ -4,7 +4,7 @@
 <p>Request Full URL: {{ request()->fullUrl() }}</p>
 <p>Request Full URL with additional parameters: {{ request()->fullUrlWithQuery(['param2' => 'value2']) }}</p>
 <p>Request Full URL without Query String: {{ request()->fullUrlWithoutQuery(['param1']) }}</p>
-<p>&nbsp;</p>
+<hr>
 <p>Host: {{ request()->host() }}</p>
 <p>HTTP Host: {{ request()->httpHost() }}</p>
 <p>Schema and HTTP Host: {{ request()->schemeAndHttpHost() }}</p>
@@ -14,3 +14,22 @@
 <p>Custom-Header: {{ request()->header('Custom-Header', 'No value') }}</p>
 <p>Bearer Token: {{ request()->bearerToken(); }}</p>
 <p>IP Address: {{ request()->ip(); }}</p>
+<hr>
+<pre>
+@php
+	print_r(request()->all());
+	print_r(request()->collect());
+
+	echo "Hobbies: ";
+	request()->collect('hobby')->each(function(string $hobby) {
+		echo $hobby . ", ";
+	});
+	echo '<br>';
+
+	print_r(request()->input());
+	print_r(request()->query());
+@endphp
+</pre>
+<p>Country: {{ request()->input('country', 'India') }}</p>
+<p>Value of param1: {{ request()->input('param1') }}</p>
+<p>Value of param2: {{ request()->input('param2', '[No param2 parameter exist]') }}</p>

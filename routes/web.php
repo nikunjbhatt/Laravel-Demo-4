@@ -137,3 +137,4 @@ Route::get('/path/{param}', function(Request $request) {
 
 Route::get('/page17', [QwertyController::class, 'xyz'])->name('page17-xyz');
 Route::any('/page18', [QwertyController::class, 'abc'])->name('page18-abc');
+Route::post('/page19', [QwertyController::class, 'abcd'])->name('page19-abcd');
