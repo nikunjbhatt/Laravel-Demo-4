@@ -5,6 +5,9 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
+//use Illuminate\Foundation\Http\Middleware\TrimStrings;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -19,7 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
 		},
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->remove([
+        	ConvertEmptyStringsToNull::class,
+        	//TrimStrings::class,
+    	]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -138,3 +138,8 @@ Route::get('/path/{param}', function(Request $request) {
 Route::get('/page17', [QwertyController::class, 'xyz'])->name('page17-xyz');
 Route::any('/page18', [QwertyController::class, 'abc'])->name('page18-abc');
 Route::post('/page19', [QwertyController::class, 'abcd'])->name('page19-abcd');
+
+Route::get('/page20', [QwertyController::class, 'a20_get'])->name('page20-get');
+Route::post('/page20', [QwertyController::class, 'a20_post']);
+Route::get('/page21', [QwertyController::class, 'a21_get']);
+Route::get('/get-photo/{userId}', [QwertyController::class, 'getPhoto'])->whereNumber('userId')->name('get-photo');
