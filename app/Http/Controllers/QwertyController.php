@@ -55,13 +55,62 @@ class QwertyController extends Controller
 	}
 
 	public function a21_get() {
-		Storage::put('folder2/file1.txt', 'This is file1.txt in folder2.');
+		//Storage::put('folder2/file1.txt', 'This is file1.txt in folder2.');
 		//Storage::disk('public')->put('example.txt', 'This is content of example.txt file.');
 		//echo Storage::disk('public')->get('example.txt');
 		//echo "<img src='" . asset('storage/folder1/sub-folder/file2.jpg') . "'>";
 		//echo "<img src='" . asset('uploaded-file/file1.png') . "'>";
 		//echo "<img src='data:image/jpeg;base64," . base64_encode(Storage::disk('private')->get('folder1/file2.jpg')) . "'>";
-		echo "<img src='" . route('get-photo', 2) . "'>";
+		//echo "<img src='" . route('get-photo', 2) . "'>";
+
+		/*$disk = Storage::build([
+    		'driver' => 'local',
+    		'root' => __DIR__ . '/../../../',
+		]);
+
+		if($disk->put('example2.txt', 'This is content of example2.txt file.'))
+			echo 'file put at ' . __DIR__ . '/../../../';
+		else
+			echo 'unable to write file at ' . __DIR__ . '/../../../';*/
+		
+		$jsonArray = [
+			[ 'name' => 'Laptop', 'price' => 55000 ],
+			[ 'name' => 'Desktop', 'price' => 35000 ],
+			[ 'name' => 'Mobile', 'price' => 25000 ],
+		];
+
+		//Storage::put('example.json', json_encode($jsonArray));
+		//print_r(Storage::json('example.json'));
+
+		/*if(Storage::exists('abc.txt'))
+			echo 'abc.txt file exist in default disk<br>';
+		else
+			echo "abc.txt file doesn't exist in default disk<br>";
+		
+		if(Storage::missing('abc.txt'))
+			echo 'abc.txt file is missing in default disk<br>';
+		
+		if(Storage::exists('example.txt'))
+			echo 'example.txt file exist in default disk<br>';
+		
+		if(Storage::disk('public')->exists('example.txt'))
+			echo 'example.txt file exist in public disk<br>';
+		else
+			echo "example.txt file doesn't exist in public disk<br>";*/
+
+		//return Storage::download('example.txt', 'abc.txt');
+
+		//echo Storage::url('example.json');
+		echo 'size: ' . Storage::size('example.json') . '<br>';
+		echo 'last modified at: ' . date('d-m-Y H:i:s', Storage::lastModified('example.json')) . '<br>';
+		echo 'MIME type: ' . Storage::mimeType('example.json') . '<br>';
+		echo 'path: ' . Storage::path('example.json') . '<br>';
+		//Storage::prepend('example.txt', "Prepended Text using Storage::prepend() method.\n");
+		//Storage::append('example.txt', "\nAppended Text using Storage::append() method.");
+		//Storage::copy('example.txt', 'example 2.txt');
+		//Storage::move('example 2.txt', 'folder1/example 2.txt');
+		//Storage::move('folder1/example 2.txt', 'folder2/example 3.txt');
+		Storage::delete('folder2/example 3.txt');
 	}
 
 	public function getPhoto($userId) {

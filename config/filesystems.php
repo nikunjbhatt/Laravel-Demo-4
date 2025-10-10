@@ -34,7 +34,7 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/private'),
             'serve' => true,
-            'throw' => false,
+            'throw' => false, // if set to 'true' then throws an exception when writing/putting a file fails
             'report' => false,
         ],
 
