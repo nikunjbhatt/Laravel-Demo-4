@@ -116,4 +116,29 @@ class QwertyController extends Controller
 	public function getPhoto($userId) {
 		return response()->file(storage_path("app/private/users-photos/{$userId}.jpg"));
 	}
+
+	public function a22_get() {
+		$files = Storage::files('folder1');
+
+		foreach($files as $file) {
+			echo $file . '<br>';
+		}
+
+		echo '<br>All files<br>';
+		$files = Storage::allFiles('folder1');
+
+		foreach($files as $file) {
+			echo $file . '<br>';
+		}
+
+		echo '<br>Directories<br>';
+		$dirs = Storage::directories('.');
+
+		foreach($dirs as $dir) {
+			echo $dir . '<br>';
+		}
+
+		//Storage::disk('local')->put('example.txt', 'this is file example.txt.');
+		echo Storage::temporaryUrl('example.txt', now()->addMinute());
+	}
 }

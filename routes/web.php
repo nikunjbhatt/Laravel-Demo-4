@@ -143,3 +143,9 @@ Route::get('/page20', [QwertyController::class, 'a20_get'])->name('page20-get');
 Route::post('/page20', [QwertyController::class, 'a20_post']);
 Route::get('/page21', [QwertyController::class, 'a21_get']);
 Route::get('/get-photo/{userId}', [QwertyController::class, 'getPhoto'])->whereNumber('userId')->name('get-photo');
+Route::get('/page22', [QwertyController::class, 'a22_get']);
+
+Route::get('/{path}', function($path) {
+    $file = \Storage::path($path);
+    return response()->file($file);
+})->where('path', '.*')->name('storage.local');
