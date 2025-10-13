@@ -138,7 +138,17 @@ class QwertyController extends Controller
 			echo $dir . '<br>';
 		}
 
+		echo '<br>Directories and Sub-directories<br>';
+		$dirs = Storage::allDirectories('.');
+
+		foreach($dirs as $dir) {
+			echo $dir . '<br>';
+		}
+
+		//Storage::makeDirectory('folder2/sub-folder2.1/sub-folder2.1.1');
+		Storage::deleteDirectory('folder2/sub-folder2.1/sub-folder2.1.1');
+
 		//Storage::disk('local')->put('example.txt', 'this is file example.txt.');
-		echo Storage::temporaryUrl('example.txt', now()->addMinute());
+		//echo Storage::temporaryUrl('example.json', now()->addSeconds(8));
 	}
 }

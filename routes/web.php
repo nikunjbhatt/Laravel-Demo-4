@@ -145,7 +145,32 @@ Route::get('/page21', [QwertyController::class, 'a21_get']);
 Route::get('/get-photo/{userId}', [QwertyController::class, 'getPhoto'])->whereNumber('userId')->name('get-photo');
 Route::get('/page22', [QwertyController::class, 'a22_get']);
 
-Route::get('/{path}', function($path) {
+Route::get('/temp-file/{path}', function($path, Request $request) {
+	/*if(!$request->hasValidSignature())
+		abort(403);*/
+	
     $file = \Storage::path($path);
     return response()->file($file);
 })->where('path', '.*')->name('storage.local');
+
+Route::get('/page23', function() {
+	return ['a' => 1, 'b' => 2, 'c' => 3];
+});
+Route::get('/page24', function() { // supply parameters like ?&p1=a&p2=b&p3=c
+	return request()->collect();
+});
+Route::get('/page25', function() { // supply parameters like ?&p1=a&p2=b&p3=c
+	return response('Hello World', 200)
+        ->header('X-My-Custom-Header', 'Nikunj Bhatt')
+		->header('Page-Number', 25);
+});
+Route::get('/user/{userId}', function(User $user) { // supply parameters like ?&p1=a&p2=b&p3=c
+	return $user;
+});
+Route::get('/page26', function() { // supply parameters like ?&p1=a&p2=b&p3=c
+	return response('Hello World', 200)
+        ->withHeaders([
+			'X-My-Custom-Header', 'Nikunj Bhatt',
+			'Page-Number' => 26
+		]);
+});
