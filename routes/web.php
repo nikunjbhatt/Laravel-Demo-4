@@ -168,9 +168,24 @@ Route::get('/user/{userId}', function(User $user) { // supply parameters like ?&
 	return $user;
 });
 Route::get('/page26', function() { // supply parameters like ?&p1=a&p2=b&p3=c
-	return response('Hello World', 200)
+	\Cookie::expire('c2');
+
+	return response('Hello World ' . request()->cookie('c1'), 200)
         ->withHeaders([
 			'X-My-Custom-Header', 'Nikunj Bhatt',
 			'Page-Number' => 26
-		]);
+		])
+		; //->cookie('c1', 999, 11);
+});
+Route::get('/page28', [QwertyController::class, 'a28_get'])->name('page28');
+//Route::view('/page27', 'page27')->middleware('cache.headers:public;max_age=20;etag');
+Route::get('/page29', [QwertyController::class, 'a29_get']);
+Route::view('/page30', 'page30')->name('page30');
+Route::post('/page31', [QwertyController::class, 'a31_post'])->name('page31');
+Route::get('/page32', [QwertyController::class, 'a32_get']);
+Route::get('/page33', function() {
+	return redirect()->away('https://laravel.com');
+});
+Route::get('/page34', function() {
+	return redirect(route('page30'))->with('name', 'Vaishali');
 });

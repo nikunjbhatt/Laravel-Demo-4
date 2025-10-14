@@ -26,6 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
         	ConvertEmptyStringsToNull::class,
         	//TrimStrings::class,
     	]);
+		$middleware->encryptCookies(except: [
+        	'c3',
+    	]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cookie;
 
 class QwertyController extends Controller
 {
@@ -150,5 +151,26 @@ class QwertyController extends Controller
 
 		//Storage::disk('local')->put('example.txt', 'this is file example.txt.');
 		//echo Storage::temporaryUrl('example.json', now()->addSeconds(8));
+	}
+
+	public function a28_get() {
+		Cookie::queue('c3', '33', 11);
+		return response()->view('page27'); //->withoutCookie('c1');
+	}
+
+	public function a29_get() {
+		return redirect()->route('page28');
+		return redirect('/page28');
+	}
+
+	public function a31_post(Request $request) {
+		if($request->name != 'nikunj')
+			return back()->withInput();
+		else
+			return 'name is: ' . $request->name;
+	}
+
+	public function a32_get() {
+		return redirect()->action([UserController::class, 'show'], ['id' => 5]);
 	}
 }
