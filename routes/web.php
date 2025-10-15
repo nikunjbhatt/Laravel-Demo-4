@@ -189,3 +189,8 @@ Route::get('/page33', function() {
 Route::get('/page34', function() {
 	return redirect(route('page30'))->with('name', 'Vaishali');
 });
+
+Route::get('/page35', [QwertyController::class, 'a35_get']);
+Route::get('/page36', [QwertyController::class, 'a36_get']);
+Route::get('/page37', [QwertyController::class, 'a37_get']);
+Route::get('/page38', [QwertyController::class, 'a38_get']);

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Route::pattern('userId', '[0-9]+');
         //Route::whereNumber('userId'); // not working
+		View::share('key', 'value');
     }
 }

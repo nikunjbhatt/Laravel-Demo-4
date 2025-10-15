@@ -1,0 +1,5 @@
+Prepended Text using Storage::prepend() method.
+
+This is content of example.txt file.
+
+Appended Text using Storage::append() method.

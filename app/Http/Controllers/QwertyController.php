@@ -173,4 +173,24 @@ class QwertyController extends Controller
 	public function a32_get() {
 		return redirect()->action([UserController::class, 'show'], ['id' => 5]);
 	}
+
+	public function a35_get() {
+		//return [UserController::class => 'a35_get', 'id' => 5];
+		return response()->json([UserController::class => 'a35_get', 'id' => 5])
+			->withCallback('abcd');
+	}
+
+	public function a36_get() {
+		return response()->download('example.txt', 'abc.txt');
+	}
+
+	public function a37_get() {
+		return response()->file('uploaded-file/file1.png');
+	}
+
+	public function a38_get() {
+		return view('page37', ['occupation' => 'Accountant'])
+			->with('name', 'Vijay')
+			->with('age', 44);
+	}
 }
