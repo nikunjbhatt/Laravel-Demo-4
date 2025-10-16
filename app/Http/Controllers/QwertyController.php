@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Uri;
 
 class QwertyController extends Controller
 {
@@ -189,8 +190,28 @@ class QwertyController extends Controller
 	}
 
 	public function a38_get() {
+		session(['random' => rand(0,9), 'random2' => rand(10,99)]);
+		session()->put('random3', rand(100, 999));
 		return view('page37', ['occupation' => 'Accountant'])
 			->with('name', 'Vijay')
 			->with('age', 44);
+	}
+
+	public function a39_get() {
+		return url()->temporarySignedRoute('page40', now()->addMinute());
+		return url()->signedRoute('page40');
+	}
+
+	public function a41_get() {
+		echo 'random session value: ' . session('random', 'no value set') . '<br>';
+		echo Uri::of('https://example.com')
+			->withScheme('http')
+			->withHost('test.com')
+			->withPort(8000)
+			->withPath('/users')
+			->withQuery(['page' => 2])
+			->withFragment('section-1');
+		echo '<pre>';
+		print_r(session()->all());
 	}
 }

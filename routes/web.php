@@ -194,3 +194,13 @@ Route::get('/page35', [QwertyController::class, 'a35_get']);
 Route::get('/page36', [QwertyController::class, 'a36_get']);
 Route::get('/page37', [QwertyController::class, 'a37_get']);
 Route::get('/page38', [QwertyController::class, 'a38_get']);
+
+Route::get('/page39', [QwertyController::class, 'a39_get']);
+Route::get('/page40', function() {
+	/*if(request()->hasValidSignature())
+		echo 'signature is valid';
+	else
+		echo 'signature is invalid';
+	*/
+})->name('page40')->middleware('signed');
+Route::get('/page41', [QwertyController::class, 'a41_get']);
