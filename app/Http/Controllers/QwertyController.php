@@ -212,6 +212,33 @@ class QwertyController extends Controller
 			->withQuery(['page' => 2])
 			->withFragment('section-1');
 		echo '<pre>';
+		//session()->put('ar', [1234, 'abcd', 'xyz']);
+		//print_r(session()->all());
+		//session()->push('ar', 888);
+		//print_r(session()->all());
+		//$pulledFromSession = session()->pull('ar');
+		//print_r($pulledFromSession);
 		print_r(session()->all());
+		
+		if(session()->has('count'))
+			session()->increment('count', 2);
+		else
+			session(['count' => 1]);
+		//session()->flash('status', 'Task was successful!');
+		//session()->regenerate();
+		session()->invalidate();
+		print_r(session()->all());
+		//session()->forget('count');
+	}
+
+	public function a42_post(Request $request) {
+		$request->validate([
+			'name' => 'required|max:10',
+			'email_address' => 'required|email',
+			'dob' => 'required|date'
+		], [
+			'email_address.required' => 'Please enter your email address.',
+			'dob.date' => 'Please enter a valid date of birth.'
+		]);
 	}
 }

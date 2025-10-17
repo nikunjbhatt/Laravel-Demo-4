@@ -204,3 +204,8 @@ Route::get('/page40', function() {
 	*/
 })->name('page40')->middleware('signed');
 Route::get('/page41', [QwertyController::class, 'a41_get']);
+
+Route::get('/page42', function() {
+	return view('page42');
+});
+Route::post('/page42', [QwertyController::class, 'a42_post']);
