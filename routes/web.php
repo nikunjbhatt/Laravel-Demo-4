@@ -209,3 +209,8 @@ Route::get('/page42', function() {
 	return view('page42');
 });
 Route::post('/page42', [QwertyController::class, 'a42_post']);
+
+Route::get('/page43', function() {
+	return view('page43');
+});
+Route::post('/page43', [QwertyController::class, 'a43_post']);

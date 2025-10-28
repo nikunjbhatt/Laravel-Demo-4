@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Page42Request;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cookie;
@@ -231,14 +232,34 @@ class QwertyController extends Controller
 		//session()->forget('count');
 	}
 
+	/*
 	public function a42_post(Request $request) {
 		$request->validate([
-			'name' => 'required|max:10',
+			'name' => ['required', 'max:10'],
 			'email_address' => 'required|email',
-			'dob' => 'required|date'
+			'dob' => 'required|date',
+			'occupation' => 'string|nullable'
 		], [
 			'email_address.required' => 'Please enter your email address.',
 			'dob.date' => 'Please enter a valid date of birth.'
 		]);
+	}
+	*/
+
+	public function a42_post(Page42Request $request) {
+	}
+
+	public function a43_post(Request $request) {
+		$validatedData = $request->validate([
+			'name' => ['required', 'max:10'],
+			'email_address' => 'required|email',
+			'dob' => 'required|date',
+			'gender' => 'nullable|in:Male,Female',
+		], [
+			'email_address.required' => 'Please enter your email address.',
+			'dob.date' => 'Please enter a valid date of birth.'
+		]);
+
+		return response($validatedData);
 	}
 }
