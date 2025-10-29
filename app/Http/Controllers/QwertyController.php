@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Uri;
+use Illuminate\Support\Facades\Validator;
 
 class QwertyController extends Controller
 {
@@ -246,7 +247,48 @@ class QwertyController extends Controller
 	}
 	*/
 
+	/*
 	public function a42_post(Page42Request $request) {
+	}
+	*/
+
+	public function a42_post(Request $request) {
+		/*
+		$validator = Validator::make($request->all(), [
+			'name' => ['required', 'max:10'],
+			'email_address' => 'required|email',
+			'dob' => 'required|date',
+			'occupation' => 'string|nullable'
+		], [
+			'dob.required' => 'Please enter your date of birth.'
+		]);
+		*/
+		
+		//$validator = 
+		$validatedData = 
+			Validator::make($request->all(), [
+				'name' => ['required', 'max:10'],
+				'email_address' => 'required|email',
+				'dob' => 'required|date',
+				'occupation' => 'string|nullable',
+				'val1' => 'required|between:2,5'
+			], [
+				'required' => 'Please enter :attribute.',
+				'between' => ':attribute must be between :min and :max.'
+			], [
+				'val1' => 'Value'
+			])->validateWithBag('form'); //->validate();
+
+		//$validated = $validator->validated();
+		//print_r($validated);
+		print_r($validatedData);
+		exit;
+
+		if($validator->stopOnFirstFailure()->fails()) {
+			return redirect('/page42')
+                ->withErrors($validator)
+                ->withInput();
+		}
 	}
 
 	public function a43_post(Request $request) {
@@ -259,6 +301,8 @@ class QwertyController extends Controller
 			'email_address.required' => 'Please enter your email address.',
 			'dob.date' => 'Please enter a valid date of birth.'
 		]);
+
+		$validatedData = $request->merge(['married' => 'No']);
 
 		return response($validatedData);
 	}

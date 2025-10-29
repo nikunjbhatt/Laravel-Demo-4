@@ -2,8 +2,8 @@
 p { margin-top: 0; margin-bottom: 20px; }
 .is-invalid { border: 1px solid red; }
 </style>
-@if($errors->any())
-	@foreach($errors->all() as $error)
+@if($errors->form->any())
+	@foreach($errors->form->all() as $error)
 		<p>{{ $error }}</p>
 	@endforeach
 @endif
@@ -42,6 +42,15 @@ p { margin-top: 0; margin-bottom: 20px; }
 			<td>
 				<label><input type=radio name=gender value=Male> Male</label> &nbsp; 
 				<label><input type=radio name=gender value=Female> Female</label>
+			</td>
+		</tr>
+		<tr>
+			<td>Enter Value</td>
+			<td>
+				<input type=number name=val1 value="{{ old('val1') }}" class="@error('val1') is-invalid @enderror">
+				@error('val1')
+					<p>{{ $message }}</p>
+				@enderror
 			</td>
 		</tr>
 		<tr>

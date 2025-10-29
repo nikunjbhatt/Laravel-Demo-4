@@ -12,7 +12,7 @@ class Page42Request extends FormRequest
 	*
 	* @var bool
 	*/
-	protected $stopOnFirstFailure = true;
+	//protected $stopOnFirstFailure = true;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -21,6 +21,16 @@ class Page42Request extends FormRequest
     {
         return true;
     }
+
+	/**
+	* Prepare the data for validation.
+	*/
+	protected function prepareForValidation(): void
+	{
+		$this->merge([
+			'gender' => $this->gender,
+		]);
+	}
 
     /**
      * Get the validation rules that apply to the request.
@@ -33,7 +43,8 @@ class Page42Request extends FormRequest
 			'name' => ['required', 'max:10'],
 			'email_address' => 'required|email',
 			'dob' => 'required|date',
-			'occupation' => 'string|nullable'
+			'occupation' => 'string|nullable',
+			'gender' => 'required'
 		];
     }
 
@@ -51,9 +62,21 @@ class Page42Request extends FormRequest
 	}
 
 	/**
+	* Get custom attributes for validator errors.
+	*
+	* @return array<string, string>
+	*/
+	public function attributes(): array
+	{
+		return [
+			'dob' => 'date of birth',
+		];
+	}
+
+	/**
 	* Get the "after" validation callables for the request.
 	*/
-	public function after(): array
+	/*public function after(): array
 	{
 		return [
 			function (Validator $validator) {
@@ -65,5 +88,5 @@ class Page42Request extends FormRequest
 				}
 			}
 		];
-	}
+	}*/
 }
