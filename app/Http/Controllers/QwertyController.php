@@ -271,7 +271,7 @@ class QwertyController extends Controller
 				'email_address' => 'required|email',
 				'dob' => 'required|date',
 				'occupation' => 'string|nullable',
-				'val1' => 'required|between:2,5'
+				'val1' => 'multiple_of:5'
 			], [
 				'required' => 'Please enter :attribute.',
 				'between' => ':attribute must be between :min and :max.'

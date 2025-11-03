@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
@@ -214,3 +215,16 @@ Route::get('/page43', function() {
 	return view('page43');
 });
 Route::post('/page43', [QwertyController::class, 'a43_post']);
+
+Route::get('/log', function() {
+	Log::alert('alert message');
+	Log::critical('critical log message');
+	Log::debug('debug log message');
+	Log::emergency('emergency log message');
+	Log::error('error log message');
+	Log::info('info log message');
+	Log::notice('info log message');
+	Log::warning('warning log message');
+	Log::warning(['array_key' => 'array_value']);
+	Log::info('Value of a is: {a}', ['a' => 11]);
+});
