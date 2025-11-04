@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AtoZController;
+use App\Http\Controllers\DbUserController;
 use App\Http\Controllers\QwertyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\User2Controller;
@@ -227,4 +228,9 @@ Route::get('/log', function() {
 	Log::warning('warning log message');
 	Log::warning(['array_key' => 'array_value']);
 	Log::info('Value of a is: {a}', ['a' => 11]);
+});
+
+Route::prefix('/db')->name('db.')->controller(DbUserController::class)->group(function() {
+	Route::view('/user/insert-edit', 'db.user');
+	Route::post('/user/insert', 'insert')->name('user-insert');
 });
