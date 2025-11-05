@@ -231,6 +231,9 @@ Route::get('/log', function() {
 });
 
 Route::prefix('/db')->name('db.')->controller(DbUserController::class)->group(function() {
-	Route::view('/user/insert-edit', 'db.user');
+	Route::view('/user/insert', 'db.user');
 	Route::post('/user/insert', 'insert')->name('user-insert');
+	Route::get('/users', 'listing')->name('users-list');
+	Route::get('/user/edit/{userId}', 'edit')->name('user-edit');
+	Route::post('/user/update/{userId}', 'update')->name('user-update');
 });
