@@ -28,14 +28,13 @@ class DbUserController extends Controller
 		return back()->with('insert', 'Record inserted.');
 	}
 
-	public function listing($msgArray = [])
+	public function listing()
 	{
 		$users = DB::table('users')
 			->whereNull('deleted_at')
 			->get(['id', 'name', 'email', 'created_at', 'updated_at']);
 		
-		\Log::debug($msgArray);
-		return view('db.users', ['users' => $users])->with($msgArray);
+		return view('db.users', ['users' => $users]);
 	}
 
 	public function edit($id)
@@ -76,6 +75,6 @@ class DbUserController extends Controller
 
 		DB::table('users')->where('id', $id)->update($validatedData);
 
-		return $this->listing(['update' => 'User details updated in the database.']);
+		return response()->redirectToRoute('db.users-list')->with('update', 'User details updated in the database.');
 	}
 }
