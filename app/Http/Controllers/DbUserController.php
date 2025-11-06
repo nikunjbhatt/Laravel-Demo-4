@@ -28,13 +28,26 @@ class DbUserController extends Controller
 		return back()->with('insert', 'Record inserted.');
 	}
 
-	public function listing()
+	public function listing($orderBy = 'id,asc')
 	{
+		list($field, $order) = explode(',', $orderBy);
+
+		$field = match($field) {
+			'id', 'name', 'email', 'created_at', 'updated_at' => $field,
+			default => 'id'
+		};
+
+		$order = match($order) {
+			'asc', 'desc' => $order,
+			default => 'asc'
+		};
+
 		$users = DB::table('users')
 			->whereNull('deleted_at')
+			->orderBy($field, $order)
 			->get(['id', 'name', 'email', 'created_at', 'updated_at']);
 		
-		return view('db.users', ['users' => $users]);
+		return view('db.users', ['users' => $users, 'orderBy' => ['field' => $field, 'order' => $order]]);
 	}
 
 	public function edit($id)
@@ -76,5 +89,11 @@ class DbUserController extends Controller
 		DB::table('users')->where('id', $id)->update($validatedData);
 
 		return response()->redirectToRoute('db.users-list')->with('update', 'User details updated in the database.');
+	}
+
+	public function delete($id)
+	{
+		DB::table('users')->where('id', $id)->update(['deleted_at' => now()]);
+		return response()->redirectToRoute('db.users-list')->with('delete', "User's record deleted from the database.");
 	}
 }
