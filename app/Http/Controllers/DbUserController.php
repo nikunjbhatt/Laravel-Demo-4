@@ -86,14 +86,24 @@ class DbUserController extends Controller
 
 		$validatedData['updated_at'] = now();
 
-		DB::table('users')->where('id', $id)->update($validatedData);
+		DB::transaction(function() use ($id, $validatedData) {
+			DB::table('users')->where('id', $id)->update($validatedData);
+		});
 
 		return response()->redirectToRoute('db.users-list')->with('update', 'User details updated in the database.');
 	}
 
 	public function delete($id)
 	{
-		DB::table('users')->where('id', $id)->update(['deleted_at' => now()]);
+		DB::beginTransaction();
+		
+		try {
+			DB::table('users')->where('id', $id)->update(['deleted_at' => now()]);
+			DB::commit();
+		}
+		catch(\Exception $ex) {
+			DB::rollBack();
+		}
 		return response()->redirectToRoute('db.users-list')->with('delete', "User's record deleted from the database.");
 	}
 }
