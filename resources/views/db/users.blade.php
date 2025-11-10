@@ -13,11 +13,13 @@ th[onclick] { cursor: pointer }
 	<table cellpadding=4 cellspacing=0 border=1 style="margin:auto">
 		<thead>
 			<tr>
-				<th onclick="orderBy(this)" data-field="id">Id <span>@if($orderBy['field'] == 'id') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
-				<th onclick="orderBy(this)" data-field="name">Name <span>@if($orderBy['field'] == 'name') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
-				<th onclick="orderBy(this)" data-field="email">Email Address <span>@if($orderBy['field'] == 'email') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
-				<th onclick="orderBy(this)" data-field="created_at">Created At <span>@if($orderBy['field'] == 'created_at') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
-				<th onclick="orderBy(this)" data-field="updated_at">Updated At <span>@if($orderBy['field'] == 'updated_at') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
+				<th onclick="orderBy(this)" data-field="u.id">Id <span>@if($orderBy['field'] == 'u.id') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
+				<th onclick="orderBy(this)" data-field="u.name">Name <span>@if($orderBy['field'] == 'u.name') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
+				<th onclick="orderBy(this)" data-field="u.email">Email Address <span>@if($orderBy['field'] == 'u.email') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
+				<th onclick="orderBy(this)" data-field="u.created_at">Created At <span>@if($orderBy['field'] == 'u.created_at') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
+				<th onclick="orderBy(this)" data-field="u.updated_at">Updated At <span>@if($orderBy['field'] == 'u.updated_at') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</span></th>
+				<th onclick="orderBy(this)" data-field="posts_count">Posts <span>@if($orderBy['field'] == 'posts_count') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</th>
+				<th onclick="orderBy(this)" data-field="comments_count">Comments <span>@if($orderBy['field'] == 'comments_count') @if($orderBy['order'] == 'desc') ∧ @else ∨ @endif @endif</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -30,6 +32,8 @@ th[onclick] { cursor: pointer }
 					<td>{{ $user->email }}</td>
 					<td>{{ date('d-m-Y g:i a', strtotime($user->created_at)) }}</td>
 					<td>{{ $user->updated_at ? date('d-m-Y g:i a', strtotime($user->updated_at)) : '' }}</td>
+					<td>{{ $user->posts_count }}</td>
+					<td>{{ $user->comments_count }}</td>
 					<td><a href="{{ route('db.user-edit', ['userId' => $user->id]) }}">Edit</a></td>
 					<td><button type="button" onclick="deleteUser({{ $user->id }})">Delete</button></td>
 				</tr>

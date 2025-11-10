@@ -33,8 +33,8 @@ class DbUserController extends Controller
 		list($field, $order) = explode(',', $orderBy);
 
 		$field = match($field) {
-			'id', 'name', 'email', 'created_at', 'updated_at' => $field,
-			default => 'id'
+			'u.id', 'u.name', 'u.email', 'u.created_at', 'u.updated_at', 'posts_count', 'comments_count' => $field,
+			default => 'u.id'
 		};
 
 		$order = match($order) {
@@ -42,10 +42,13 @@ class DbUserController extends Controller
 			default => 'asc'
 		};
 
-		$users = DB::table('users')
-			->whereNull('deleted_at')
+		$users = DB::table('users AS u')
+			->leftJoin('posts AS p', 'p.user_id', '=', 'u.id')
+			->whereNull('u.deleted_at')
+			->whereNull('p.deleted_at')
 			->orderBy($field, $order)
-			->get(['id', 'name', 'email', 'created_at', 'updated_at']);
+			->groupBy('p.user_id')
+			->get(['u.id', 'name', 'email', 'u.created_at', 'u.updated_at', DB::raw('COUNT(p.user_id) posts_count'), DB::raw('(SELECT COUNT(c.user_id) comments_count FROM comments c WHERE c.user_id = u.id AND c.deleted_at IS NULL GROUP BY c.user_id) comments_count')]);
 		
 		return view('db.users', ['users' => $users, 'orderBy' => ['field' => $field, 'order' => $order]]);
 	}

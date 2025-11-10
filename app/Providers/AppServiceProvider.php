@@ -28,11 +28,11 @@ class AppServiceProvider extends ServiceProvider
         //Route::whereNumber('userId'); // not working
 		View::share('key', 'value');
 
-		/*DB::listen(function (QueryExecuted $query) {
-            \Log::info($query->sql);
-            \Log::info($query->bindings);
-            \Log::info($query->time);
+		DB::listen(function (QueryExecuted $query) {
+            //\Log::info($query->sql);
+            //\Log::info($query->bindings);
+            //\Log::info($query->time);
             \Log::info($query->toRawSql());
-        });*/
+        });
     }
 }
