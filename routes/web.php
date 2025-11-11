@@ -237,4 +237,6 @@ Route::prefix('/db')->name('db.')->controller(DbUserController::class)->group(fu
 	Route::get('/user/edit/{userId}', 'edit')->name('user-edit');
 	Route::post('/user/update/{userId}', 'update')->name('user-update');
 	Route::delete('/user/delete/{userId}', 'delete')->name('user-delete');
+	
+	Route::get('/user/lateral-join', 'lateral_join')->name('user-lateral-join'); // check this for MySQL database (not MariaDB)
 });

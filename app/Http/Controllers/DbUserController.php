@@ -68,10 +68,7 @@ class DbUserController extends Controller
 	{
 		$user = DB::table('users')
 			->where('id', $id)
-			->get(['id', 'name', 'email']);
-		
-		if(!count($user))
-			abort(404, 'No user not found having the supplied id.');
+			->firstOrFail(['id', 'name', 'email']);
 		
 		return view('db.user', ['user' => $user[0]]);
 	}
@@ -119,5 +116,20 @@ class DbUserController extends Controller
 			DB::rollBack();
 		}
 		return response()->redirectToRoute('db.users-list')->with('delete', "User's record deleted from the database.");
+	}
+
+	public function lateral_join()
+	{
+		$latestPosts = DB::table('posts')
+			->select('id as post_id', 'title as post_title', 'created_at as post_created_at')
+			->whereColumn('user_id', 'users.id')
+			->orderBy('created_at', 'desc')
+			->limit(3);
+
+		$users = DB::table('users')
+			->joinLateral($latestPosts, 'latest_posts')
+			->get();
+
+		return view('db.lateral-join', ['users' => $users]);
 	}
 }
