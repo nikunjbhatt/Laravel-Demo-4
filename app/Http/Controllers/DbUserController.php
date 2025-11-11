@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -48,7 +49,17 @@ class DbUserController extends Controller
 			->whereNull('p.deleted_at')
 			->orderBy($field, $order)
 			->groupBy('p.user_id')
-			->get(['u.id', 'name', 'email', 'u.created_at', 'u.updated_at', DB::raw('COUNT(p.user_id) posts_count'), DB::raw('(SELECT COUNT(c.user_id) comments_count FROM comments c WHERE c.user_id = u.id AND c.deleted_at IS NULL GROUP BY c.user_id) comments_count')]);
+			->select(['u.id', 'name', 'email', 'u.created_at', 'u.updated_at', DB::raw('COUNT(p.user_id) posts_count')])
+			->addSelect([
+				'comments_count' => function(Builder $builder) {
+					$builder->select(DB::raw('COUNT(c.user_id)'))
+						->from('comments AS c')
+						->whereRaw('c.user_id = u.id')
+						->whereNull('c.deleted_at')
+						->groupBy('c.user_id');
+				}
+			])
+			->get();
 		
 		return view('db.users', ['users' => $users, 'orderBy' => ['field' => $field, 'order' => $order]]);
 	}
