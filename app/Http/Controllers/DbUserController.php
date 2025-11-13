@@ -132,4 +132,76 @@ class DbUserController extends Controller
 
 		return view('db.lateral-join', ['users' => $users]);
 	}
+
+	public function union_query()
+	{
+		$products = DB::table('products')
+			->select([DB::raw("'Products' AS `table`"), 'id', 'name', 'size_unit AS extra', 'created_at', 'updated_at']);
+		
+		$usersProducts = DB::table('users')
+			->select([DB::raw("'Users' AS `table`"), 'id', 'name', 'email AS extra', 'created_at', 'updated_at'])
+			->union($products)
+			->get();
+		
+		return view('db.union-query', ['usersProducts' => $usersProducts]);
+	}
+
+	public function query_examples()
+	{
+		DB::table('users')
+			->where('votes', '>', 100)
+			->orWhere(function (Builder $query) {
+				$query->where('name', 'Abigail')
+					->where('votes', '>', 50);
+			});
+		// where votes > 100 or (name = 'Abigail' and votes > 50)
+
+		DB::table('products')
+			->whereNot(function (Builder $query) {
+				$query->where('clearance', true)
+					->orWhere('price', '<', 10);
+			});
+		// where NOT (clearance = true or price < 10)
+
+		DB::table('users')
+			->where('active', true)
+			->whereAny([
+				'name',
+				'email',
+				'phone',
+			], 'like', 'Example%');
+		// where active = true and (name LIKE 'Example%' OR email LIKE 'Example%' OR phone LIKE 'Example%')
+
+		DB::table('posts')
+			->where('published', true)
+			->whereAll([
+				'title',
+				'content',
+			], 'like', '%Laravel%');
+		// where published = true and (title like '%Laravel%' and content like '%Laravel%')
+
+		DB::table('albums')
+			->where('published', true)
+			->whereNone([
+				'title',
+				'lyrics',
+				'tags',
+			], 'like', '%explicit%');
+		// WHERE published = true AND NOT (title LIKE '%explicit%' OR lyrics LIKE '%explicit%' OR tags LIKE '%explicit%')
+
+		// JSON
+		DB::where('preferences->dining->meal', 'salad');
+		// column preferences = { 'dining': { 'meal': 'salad' } }
+
+		DB::whereIn('preferences->dining->meal', ['pasta', 'salad', 'sandwich']);
+
+		DB::whereLike('name', '%John%');
+		// where name like '%John%'
+
+		DB::orWhereLike('name', '%John%');
+		// where <other_condition> or name like '%John%'
+
+		DB::whereNotLike('name', '%John%');
+		// where name not like '%John%'
+	}
 }
