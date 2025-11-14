@@ -230,14 +230,15 @@ Route::get('/log', function() {
 	Log::info('Value of a is: {a}', ['a' => 11]);
 });
 
-Route::prefix('/db')->name('db.')->controller(DbUserController::class)->group(function() {
-	Route::view('/user/insert', 'db.user');
-	Route::post('/user/insert', 'insert')->name('user-insert');
-	Route::get('/users/{orderBy?}', 'listing')->name('users-list');
-	Route::get('/user/edit/{userId}', 'edit')->name('user-edit');
-	Route::post('/user/update/{userId}', 'update')->name('user-update');
-	Route::delete('/user/delete/{userId}', 'delete')->name('user-delete');
+Route::prefix('db')->name('db.')->controller(DbUserController::class)->group(function() {
+	Route::view('user/insert', 'db.user');
+	Route::post('user/insert', 'insert')->name('user-insert');
+	Route::get('users/{orderBy?}', 'listing')->name('users-list');
+	Route::get('user/edit/{userId}', 'edit')->name('user-edit');
+	Route::post('user/update/{userId}', 'update')->name('user-update');
+	Route::delete('user/delete/{userId}', 'delete')->name('user-delete');
 	
-	Route::get('/lateral-join', 'lateral_join'); // check this for MySQL database (not MariaDB)
-	Route::get('/union-query', 'union_query');
+	Route::get('lateral-join', 'lateral_join'); // check this for MySQL database (not MariaDB)
+	Route::get('union-query', 'union_query');
+	Route::get('example-query', 'example_query');
 });
