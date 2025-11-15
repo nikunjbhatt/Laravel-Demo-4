@@ -241,4 +241,5 @@ Route::prefix('db')->name('db.')->controller(DbUserController::class)->group(fun
 	Route::get('lateral-join', 'lateral_join'); // check this for MySQL database (not MariaDB)
 	Route::get('union-query', 'union_query');
 	Route::get('example-query', 'example_query');
+	Route::get('comments/{offset?}', 'comments')->name('comments');
 });

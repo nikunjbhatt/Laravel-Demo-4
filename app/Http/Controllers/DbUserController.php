@@ -283,5 +283,18 @@ class DbUserController extends Controller
 			//->get()
 			;
 		// select * from `users` where (select `status` from `posts` where `posts`.`user_id` = `users`.`id` limit 1) = 'Draft' and `users`.`deleted_at` is null
+
+		DB::table('users')->inRandomOrder()->first();
+		// select * from `users` order by RAND() limit 1
+	}
+
+	public function comments($offset = 0)
+	{
+		$comments = DB::table('comments')
+			->limit(10)
+			->offset($offset)
+			->get();
+		
+		return view('db.comments', ['comments' => $comments, 'offset' => $offset]);
 	}
 }
