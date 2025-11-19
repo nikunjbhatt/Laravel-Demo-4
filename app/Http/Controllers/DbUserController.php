@@ -284,8 +284,19 @@ class DbUserController extends Controller
 			;
 		// select * from `users` where (select `status` from `posts` where `posts`.`user_id` = `users`.`id` limit 1) = 'Draft' and `users`.`deleted_at` is null
 
-		DB::table('users')->inRandomOrder()->first();
+		DB::table('users')->inRandomOrder(); //->first();
 		// select * from `users` order by RAND() limit 1
+
+		echo DB::table('users')->where('votes', '>', 100)->sharedLock()->toRawSql() . '<br>';
+		// select * from `users` where `votes` > 100 lock in share mode
+
+		echo DB::table('users')->where('votes', '>', 100)->lockForUpdate()->toRawSql() . '<br>';
+		// select * from `users` where `votes` > 100 for update
+
+		DB::table('users')->where('id', '<', 10)->orderBy('email')->dump();
+		//DB::table('users')->where('id', '<', 10)->orderBy('email')->dd();
+		DB::table('users')->where('id', '<', 10)->orderBy('email')->dumpRawSql();
+		DB::table('users')->where('id', '<', 10)->orderBy('email')->ddRawSql();
 	}
 
 	public function comments($offset = 0)
@@ -296,5 +307,11 @@ class DbUserController extends Controller
 			->get();
 		
 		return view('db.comments', ['comments' => $comments, 'offset' => $offset]);
+	}
+
+	public function comments_pagination()
+	{
+		$comments = DB::table('comments')->paginate(5, '*', 'p', 10);
+		return view('db.comments-pagination', ['comments' => $comments]);
 	}
 }

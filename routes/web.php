@@ -242,4 +242,5 @@ Route::prefix('db')->name('db.')->controller(DbUserController::class)->group(fun
 	Route::get('union-query', 'union_query');
 	Route::get('example-query', 'example_query');
 	Route::get('comments/{offset?}', 'comments')->name('comments');
+	Route::get('comments-pagination', 'comments_pagination');
 });

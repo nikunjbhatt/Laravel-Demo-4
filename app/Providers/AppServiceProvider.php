@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Route::pattern('userId', '[0-9]+');
         //Route::whereNumber('userId'); // not working
 		View::share('key', 'value');
+		Paginator::useBootstrapFive();
 
 		DB::listen(function (QueryExecuted $query) {
             //\Log::info($query->sql);
