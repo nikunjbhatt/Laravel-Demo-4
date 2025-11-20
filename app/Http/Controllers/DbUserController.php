@@ -311,7 +311,20 @@ class DbUserController extends Controller
 
 	public function comments_pagination()
 	{
-		$comments = DB::table('comments')->paginate(5, '*', 'p', 10);
-		return view('db.comments-pagination', ['comments' => $comments]);
+		list($field, $order) = explode(',', request('orderBy', 'id,asc'));
+
+		$field = match($field) {
+			'id', 'post_id', 'user_id', 'created_at' => $field,
+			default => 'id'
+		};
+
+		$order = match($order) {
+			'asc', 'desc' => $order,
+			default => 'asc'
+		};
+
+		$comments = DB::table('comments')->orderBy($field, $order)->paginate(5);
+		$comments->appends('orderBy', "$field,$order");
+		return view('db.comments-pagination', ['comments' => $comments, 'orderBy' => ['field' => $field, 'order' => $order] ] );
 	}
 }
