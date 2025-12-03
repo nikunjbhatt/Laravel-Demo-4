@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class User4Controller extends Controller
 {
@@ -15,7 +16,9 @@ class User4Controller extends Controller
 
 	public function create(Request $request)
 	{
-		User::create($request->all());
+		DB::transaction(function() use ($request) {
+			User::create($request->all());
+		});
 	}
 
 	public function edit($id)

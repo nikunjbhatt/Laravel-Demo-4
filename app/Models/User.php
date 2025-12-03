@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Observers\UserObserver;
 
 class User extends Authenticatable
 {
@@ -37,6 +38,8 @@ class User extends Authenticatable
 
 	protected static function booted(): void
 	{
+		User::observe(UserObserver::class);
+
 		static::created(function (User $user) {
 			\Log::debug('User Created: ' . $user->name);
 		});
