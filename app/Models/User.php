@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+		'gender',
         'email',
         'password',
     ];
@@ -33,6 +34,22 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+	protected static function booted(): void
+	{
+		static::created(function (User $user) {
+			\Log::debug('User Created: ' . $user->name);
+		});
+
+		static::updating(function (User $user) {
+			if($user->gender == 'male')
+				$user->gender = 'M';
+			else
+				$user->gender = 'F';
+						
+			\Log::debug('User Updated: ' . $user->name);
+		});
+	}
 
     /**
      * Get the attributes that should be cast.

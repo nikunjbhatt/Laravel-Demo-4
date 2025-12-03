@@ -6,7 +6,7 @@ use App\Http\Controllers\QwertyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\User2Controller;
 use App\Http\Controllers\User3Controller;
-
+use App\Http\Controllers\User4Controller;
 use App\Http\Middleware\MidWare1;
 
 use App\Models\User;
@@ -243,4 +243,12 @@ Route::prefix('db')->name('db.')->controller(DbUserController::class)->group(fun
 	Route::get('example-query', 'example_query');
 	Route::get('comments/{offset?}', 'comments')->name('comments');
 	Route::get('comments-pagination', 'comments_pagination');
+});
+
+Route::prefix('model')->name('model.')->group(function() {
+	Route::get('users', [User4Controller::class, 'listing']);
+	Route::view('user/create', 'model.user');
+	Route::post('user/create', [User4Controller::class, 'create'])->name('user-create');
+	Route::get('user/edit/{userId}', [User4Controller::class, 'edit'])->name('user-edit');
+	Route::post('user/update/{userId}', [User4Controller::class, 'update'])->name('user-update');
 });

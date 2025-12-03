@@ -191,11 +191,12 @@ class DbUserController extends Controller
 			], 'like', '%explicit%');
 		// WHERE published = true AND NOT (title LIKE '%explicit%' OR lyrics LIKE '%explicit%' OR tags LIKE '%explicit%')
 
-		// JSON
+		// JSON column preferences = { 'dining': { 'meal': 'salad' } }
 		DB::where('preferences->dining->meal', 'salad');
-		// column preferences = { 'dining': { 'meal': 'salad' } }
+		// where json_unquote(json_extract(`preferences`, '$."dining"."meal"')) = 'salad'
 
 		DB::whereIn('preferences->dining->meal', ['pasta', 'salad', 'sandwich']);
+		// where json_unquote(json_extract(`preferences`, '$."dining"."meal"')) in ('pasta', 'salad', 'sandwich')
 
 		DB::whereLike('name', '%John%');
 		// where name like '%John%'
@@ -296,7 +297,12 @@ class DbUserController extends Controller
 		DB::table('users')->where('id', '<', 10)->orderBy('email')->dump();
 		//DB::table('users')->where('id', '<', 10)->orderBy('email')->dd();
 		DB::table('users')->where('id', '<', 10)->orderBy('email')->dumpRawSql();
-		DB::table('users')->where('id', '<', 10)->orderBy('email')->ddRawSql();
+		//DB::table('users')->where('id', '<', 10)->orderBy('email')->ddRawSql();
+
+		DB::table('users')->where('preferences->dining->meal', 'salad')->dumpRawSql();
+		// column preferences = { 'dining': { 'meal': 'salad' } }
+
+		DB::table('users')->whereIn('preferences->dining->meal', ['pasta', 'salad', 'sandwich'])->dumpRawSql();
 	}
 
 	public function comments($offset = 0)
