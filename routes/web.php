@@ -8,6 +8,7 @@ use App\Http\Controllers\User2Controller;
 use App\Http\Controllers\User3Controller;
 use App\Http\Controllers\User4Controller;
 use App\Http\Middleware\MidWare1;
+use App\Http\Controllers\PostController;
 
 use App\Models\User;
 
@@ -251,4 +252,5 @@ Route::prefix('model')->name('model.')->group(function() {
 	Route::post('user/create', [User4Controller::class, 'create'])->name('user-create');
 	Route::get('user/edit/{userId}', [User4Controller::class, 'edit'])->name('user-edit');
 	Route::post('user/update/{userId}', [User4Controller::class, 'update'])->name('user-update');
+	Route::get('user/{userId}/posts', [PostController::class, 'listing'])->name('user-posts');
 });
