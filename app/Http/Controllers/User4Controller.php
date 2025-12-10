@@ -10,14 +10,11 @@ class User4Controller extends Controller
 {
     public function listing()
 	{
-		$users = User::addSelect(
-			DB::raw('(select count(id) from posts p where p.user_id = users.id) posts_count'),
-			DB::raw('(select count(id) from comments c where c.user_id = users.id) comments_count')
-		)
-		->orderBy('name')
-		->get();
+		$users = User::orderBy('name')
+			//->with(['posts', 'comments'])
+			->withCount(['posts', 'comments'])
+			->get();
 
-		//return view('model.users', ['users' => User::all()]);
 		return view('model.users', ['users' => $users]);
 	}
 
