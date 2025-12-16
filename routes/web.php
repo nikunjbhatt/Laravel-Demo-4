@@ -254,3 +254,5 @@ Route::prefix('model')->name('model.')->group(function() {
 	Route::post('user/update/{userId}', [User4Controller::class, 'update'])->name('user-update');
 	Route::get('user/{userId}/posts', [PostController::class, 'listing'])->name('user-posts');
 });
+
+Route::get('user-array', [User4Controller::class, 'user_array']);

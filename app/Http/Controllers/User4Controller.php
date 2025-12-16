@@ -40,4 +40,16 @@ class User4Controller extends Controller
 		else
 			$user->update($request->all());
 	}
+
+	public function user_array()
+	{
+		$user = User::find(3);
+		//return $user->toArray();
+		//return response($user->toJson(JSON_PRETTY_PRINT))->withHeaders(['Content-Type' => 'application/json']);
+		//return response($user)->withHeaders(['Content-Type' => 'application/json']);
+		return User::all()
+			//->makeVisible(['password', 'remember_token'])
+			->append('is_admin')
+			->makeHidden(['updated_at', 'deleted_at']);
+	}
 }

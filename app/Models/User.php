@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Observers\UserObserver;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -33,6 +34,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+		'email_verified_at',
         'remember_token',
     ];
 
@@ -64,6 +66,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+			'created_at' => 'date:d-m-Y g:i a'
         ];
     }
 
@@ -76,4 +79,13 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Comment::class);//->chaperone();
 	}
+
+	protected function isAdmin(): Attribute
+    {
+        return new Attribute(
+            get: fn() => rand(0, 1) ? 'Yes' : 'No',
+        );
+    }
+
+	//protected $appends = ['is_admin'];
 }
