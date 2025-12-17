@@ -255,4 +255,9 @@ Route::prefix('model')->name('model.')->group(function() {
 	Route::get('user/{userId}/posts', [PostController::class, 'listing'])->name('user-posts');
 });
 
+Route::get('serialize', function() {
+	$ar = [ 123, 45.67, null, 'a' => 'string', 'b' => null, [9, 8, 7]];
+	echo serialize($ar);
+});
+
 Route::get('user-array', [User4Controller::class, 'user_array']);
