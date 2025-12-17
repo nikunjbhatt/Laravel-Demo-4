@@ -6,7 +6,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+
 use App\Models\User;
+use App\Models\Post;
 
 class UserSeeder extends Seeder
 {
@@ -26,8 +28,9 @@ class UserSeeder extends Seeder
 			]);
 		}*/
 
-		User::factory(5)
+		User::factory()
 			//->count(5);
+			->has(Post::factory()->count(3))
 			->create();
     }
 }
