@@ -20,7 +20,8 @@ class User3Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
+		return response()->json(['created' => true], 201);
     }
 
     /**
