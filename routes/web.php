@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome', ['name' => 'nikunj', 'surname' => 'bhatt', 'dob' => null]);
@@ -261,3 +262,10 @@ Route::get('serialize', function() {
 });
 
 Route::get('user-array', [User4Controller::class, 'user_array']);
+
+Route::get('testing', function() {
+	Session::put('session_key', 'session value');
+	echo 'This is some text';
+	//$user = User::find(3);
+	return response('')->withHeaders([ 'X-Header-Name' => 'Nikunj' ]);
+});
