@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AtoZController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DbUserController;
 use App\Http\Controllers\QwertyController;
 use App\Http\Controllers\UserController;
@@ -268,4 +269,12 @@ Route::get('testing', function() {
 	echo 'This is some text';
 	//$user = User::find(3);
 	return response('')->withHeaders([ 'X-Header-Name' => 'Nikunj' ]);
+});
+
+Route::get('login', function() {
+	return view('auth.login');
+})->name('login-form');
+Route::post('login', [AuthController::class, 'login']);
+Route::get('dashboard', function() {
+	return view('dashboard');
 });
