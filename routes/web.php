@@ -14,6 +14,7 @@ use App\Http\Controllers\PostController;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Log;
@@ -278,3 +279,10 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('dashboard', function() {
 	return view('dashboard');
 });
+
+Route::get('logout', function(Request $request) {
+	Auth::guard('web')->logout();
+	$request->session()->invalidate();
+	$request->session()->regenerateToken();
+	return redirect('dashboard');
+})->name('logout');
