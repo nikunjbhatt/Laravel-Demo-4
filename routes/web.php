@@ -120,7 +120,7 @@ Route::fallback(function() {
 	return view('not-found');
 });
 
-Route::get('u/{id}', [UserController::class, 'show']);
+Route::get('u/{id}', [UserController::class, 'show'])->middleware(['auth', 'verified']);
 //Route::get('u/{id}', 'App\Http\Controllers\UserController@show');
 
 Route::get('/atoz', AtoZController::class);
@@ -274,7 +274,7 @@ Route::get('testing', function() {
 
 Route::get('login', function() {
 	return view('auth.login');
-})->name('login-form');
+})->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::get('dashboard', function() {
 	return view('dashboard');
