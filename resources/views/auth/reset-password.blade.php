@@ -4,31 +4,25 @@
 	@endforeach
 @endif
 
-@if(session('status'))
-	<p style="text-align:center;color:green">{{ session('green') }}</p>
-@endif
-
-<form method=post>
+<form method=post action="{{ route('password.update') }}">
 	@csrf
+	<input type=hidden name=token value="{{ $token }}">
 	<table cellspacing=0 cellpadding=6 border=1 align=center>
 		<tr>
 			<td>Email Address</td>
 			<td><input type="email" name=email value="{{ old('email') }}" required></td>
 		</tr>
 		<tr>
-			<td>Password</td>
+			<td>New Password</td>
 			<td><input type="password" name=password required></td>
 		</tr>
 		<tr>
-			<td>Remember Login?</td>
-			<td><input type="checkbox" name=remember_login value=true></td>
+			<td>Confirm New Password</td>
+			<td><input type="password" name=password_confirmation required></td>
 		</tr>
 	</table>
-	<p style="text-align: center">
-		<button>Login</button>
-	</p>
-	
-	<p style="text-align: center">
-		Forgot the password? <a href="{{ route('password.request') }}">Click here to reset.</a>
+
+	<p style="text-align:center">
+		<button>Change Password</button>
 	</p>
 </form>

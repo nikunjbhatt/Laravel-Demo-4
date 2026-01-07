@@ -286,3 +286,15 @@ Route::get('logout', function(Request $request) {
 	$request->session()->regenerateToken();
 	return redirect('dashboard');
 })->name('logout');
+
+Route::get('forgot-password', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
+
+Route::post('forgot-password', [AuthController::class, 'resetPassword1'])->middleware('guest')->name('password.email');
+
+Route::get('reset-password/{token}', function(string $token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+Route::post('reset-password', [AuthController::class, 'resetPassword2'])->middleware('guest')->name('password.update');
