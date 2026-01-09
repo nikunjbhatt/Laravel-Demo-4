@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\StringEncrypted;
 use App\Http\Controllers\AtoZController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DbUserController;
@@ -319,4 +320,8 @@ Route::get('hash', function() {
 		echo '<br>hashed value matched';
 	else
 		echo "<br>hashed value didn't matched";
+});
+
+Route::get('event', function() {
+	StringEncrypted::dispatch('string value');
 });
