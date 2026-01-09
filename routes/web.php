@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -298,3 +300,23 @@ Route::get('reset-password/{token}', function(string $token) {
 })->middleware('guest')->name('password.reset');
 
 Route::post('reset-password', [AuthController::class, 'resetPassword2'])->middleware('guest')->name('password.update');
+
+Route::get('encryption', function() {
+	$encrypted = Crypt::encryptString('plain string');
+	echo $encrypted . '<br><br>' . base64_decode($encrypted);
+	$obj = json_decode(base64_decode($encrypted));
+	echo '<br><br>' . base64_decode($obj->value);
+	echo '<br><br>' . base64_decode($obj->iv);
+	echo '<br><br>' . base64_decode($obj->mac);
+	echo '<br><br>' . Crypt::decryptString($encrypted);
+});
+
+Route::get('hash', function() {
+	$hashedValue = Hash::make('plain value');
+	echo $hashedValue;
+
+	if(Hash::check('plain value', $hashedValue))
+		echo '<br>hashed value matched';
+	else
+		echo "<br>hashed value didn't matched";
+});
