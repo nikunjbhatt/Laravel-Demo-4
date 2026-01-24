@@ -325,3 +325,5 @@ Route::get('hash', function() {
 Route::get('event', function() {
 	StringEncrypted::dispatch('string value');
 });
+
+Route::get('user-with-job', [UserController::class, 'store']);
