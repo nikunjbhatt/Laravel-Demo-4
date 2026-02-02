@@ -67,6 +67,8 @@ class QwertyController extends Controller
 		//echo "<img src='data:image/jpeg;base64," . base64_encode(Storage::disk('private')->get('folder1/file2.jpg')) . "'>";
 		//echo "<img src='" . route('get-photo', 2) . "'>";
 
+		//return response()->file(storage_path("app/private/1004.docx"));
+
 		/*$disk = Storage::build([
     		'driver' => 'local',
     		'root' => __DIR__ . '/../../../',
